@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
@@ -12,6 +13,7 @@ public class Main {
         String oracion = "";
         BinaryTree bt  = new BinaryTree<>();
         String opcion;
+        HashMap<String, String> d = new HashMap<>();
         System.out.println("Bienvenido al programa");
         System.out.println("Ingrese el numero de la opcion que desea elegir: ");
         do {
@@ -51,6 +53,7 @@ public class Main {
 
                                 Association<String, String> a = new Association<>(ingles,espanol);
                                 bt.insert(a);
+                                d.put(ingles, espanol);
                             }
                             System.out.println("La lectura del archivo fue exitosa");
                             System.out.println("A continuacion se despliegara el arbol binario in-order: ");
@@ -83,6 +86,7 @@ public class Main {
                             System.out.println("La lectura del archivo fue exitosa");
                             System.out.println("Se encontro el siguiente texto: \n");
                             System.out.println(oracion);
+                            oracion = oracion.substring(0, oracion.length()-1);
                             go = true;
                         } catch (Exception e) {
                             System.out.println("No fue posible la lectura del archivo con la direccion que especifico...\nIntentelo de nuevo!");
@@ -91,13 +95,24 @@ public class Main {
                     ArrayList<String> wrds = new ArrayList<>(Arrays.asList(oracion.split(" ")));
                     ArrayList<String> traduc = new ArrayList<>();
                     for (String palabra : wrds){
-                        if()
+                        if(d.containsKey(palabra)){
+                            traduc.add("*"+d.get(palabra)+"*");
+                        }else{
+                            traduc.add(palabra);
+                        }
                     }
-
+                    String respuesta = "";
+                    for(String palabra: traduc){
+                        respuesta += " " + palabra;
+                    }
+                    respuesta += ".";
+                    System.out.println("La traduccion de la oracion encontrada es: \n");
+                    System.out.println(respuesta);
 
 
                     break;
                 case "3":
+                    System.out.println("Bye.");
                     on = false;
                     break;
                 default:
